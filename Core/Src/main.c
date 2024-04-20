@@ -94,6 +94,8 @@ int main(void)
 
         if ((current_time - last_time_us[IDX_TIME_RECV_CONTROL]) > TIME_RECV_CONTROL)
         {
+            periph_radio_receive((uint8_t *)&OpenDrone_TxProto_Msg_OprCtrl);
+
             last_time_us[IDX_TIME_RECV_CONTROL] = current_time;
         }
         /* USER CODE END WHILE */

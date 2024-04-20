@@ -62,7 +62,7 @@ err_code_t periph_radio_init(void)
 	return ERR_CODE_SUCCESS;
 }
 
-err_code_t periph_radio_send(uint8_t *data)
+err_code_t periph_radio_receive(uint8_t *data)
 {
 #ifdef USE_NRF24L01
 	nrf24l01_transmit(nrf24l01_handle, data);
