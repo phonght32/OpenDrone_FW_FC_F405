@@ -20,39 +20,21 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#ifndef __HW_H__
-#define __HW_H__
+#ifndef __PERIPH_RADIO_H__
+#define __PERIPH_RADIO_H__
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#define USE_NRF24L01
-// #define USE_SX1278
+#include "err_code.h"
 
-
-#define CONFIG_NRF24L01_CHANNEL				2500
-#define CONFIG_NRF24L01_PAYLOAD_LEN 		32
-#define CONFIG_NRF24L01_CRC_LEN  			1
-#define CONFIG_NRF24L01_ADDR_WIDTH  		5
-#define CONFIG_NRF24L01_RETRANS_CNT  		3
-#define CONFIG_NRF24L01_RETRANS_DELAY 		200
-#define CONFIG_NRF24L01_DATA_RATE  			NRF24L01_DATA_RATE_1Mbps
-#define CONFIG_NRF24L01_OUTPUT_PWR 			NRF24L01_OUTPUT_PWR_0dBm
-#define CONFIG_NRF24L01_TRANSCEIVER_MODE  	NRF24L01_TRANSCEIVER_MODE_TX
-
-
-#define CONFIG_SX1278_FREQ 					434000000
-#define CONFIG_SX1278_PACKET_LEN  			32
-#define CONFIG_SX1278_OUTPUT_PWR  			SX1278_OUTPUT_PWR_17dBm
-#define CONFIG_SX1278_SPREAD_FACTOR  		SX1278_SPREAD_FACTOR_7
-#define CONFIG_SX1278_BANDWIDTH  			SX1278_BANDWIDTH_125kHz
-#define CONFIG_SX1278_CODING_RATE  			SX1278_CODING_RATE_4_5
-#define CONFIG_SX1278_CRC_EN  				SX1278_CRC_ENABLE
-#define CONFIG_SX1278_TRANSCEIVER_MODE 		SX1278_TRANSCEIVER_MODE_TX
+err_code_t periph_radio_init(void);
+err_code_t periph_radio_send(uint8_t *data);
+err_code_t periph_radio_clear_transmit_irq_flags(void);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* __HW_H__ */
+#endif /* __PERIPH_RADIO_H__ */
