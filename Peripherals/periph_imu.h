@@ -20,42 +20,19 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-#ifndef __HW_INTF_H__
-#define __HW_INTF_H__
+#ifndef __PERIPH_IMU_H__
+#define __PERIPH_IMU_H__
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#include "hw.h"
 #include "err_code.h"
 
-uint32_t hw_intf_get_time_us(void);
-void hw_intf_delay_ms(uint32_t time_ms);
-
-#ifdef USE_NRF24L01
-err_code_t hw_intf_nrf24l01_spi_send(uint8_t *buf_send, uint16_t len);
-err_code_t hw_intf_nrf24l01_spi_recv(uint8_t *buf_recv, uint16_t len);
-err_code_t hw_intf_nrf24l01_set_cs(uint8_t level);
-err_code_t hw_intf_nrf24l01_set_ce(uint8_t level);
-err_code_t hw_intf_nrf24l01_get_irq(uint8_t *level);
-#endif
-
-#ifdef USE_SX1278
-err_code_t hw_intf_sx1278_spi_send(uint8_t *buf_send, uint16_t len);
-err_code_t hw_intf_sx1278_spi_recv(uint8_t *buf_recv, uint16_t len);
-err_code_t hw_intf_sx1278_set_cs(uint8_t level);
-err_code_t hw_intf_sx1278_set_rst(uint8_t level);
-err_code_t hw_intf_sx1278_get_irq(uint8_t *level);
-#endif
-
-#ifdef USE_MPU6050
-err_code_t hw_intf_mpu6050_i2c_send(uint8_t reg_addr, uint8_t *buf, uint16_t len);
-err_code_t hw_intf_mpu6050_i2c_recv(uint8_t reg_addr, uint8_t *buf, uint16_t len);
-#endif
+err_code_t periph_imu_init(void);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* __HW_INTF_H__ */
+#endif /* __PERIPH_IMU_H__ */

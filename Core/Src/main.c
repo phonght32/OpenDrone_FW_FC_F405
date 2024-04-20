@@ -18,6 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "i2c.h"
 #include "spi.h"
 #include "tim.h"
 #include "gpio.h"
@@ -26,6 +27,7 @@
 /* USER CODE BEGIN Includes */
 #include "hw_intf.h"
 #include "periph_radio.h"
+#include "periph_imu.h"
 #include "OpenDrone_TxProto.h"
 /* USER CODE END Includes */
 /* Private typedef -----------------------------------------------------------*/
@@ -76,7 +78,9 @@ int main(void)
     MX_GPIO_Init();
     MX_SPI2_Init();
     MX_TIM1_Init();
+    MX_I2C1_Init();
     /* USER CODE BEGIN 2 */
+    periph_imu_init();
     periph_radio_init();
     /* USER CODE END 2 */
     /* Infinite loop */
