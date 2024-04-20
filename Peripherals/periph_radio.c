@@ -83,7 +83,7 @@ err_code_t periph_radio_clear_transmit_irq_flags(void)
 
 	if (irq_level == NRF24L01_IRQ_ACTIVE_LEVEL)
 	{
-		nrf24l01_clear_transmit_irq_flags(nrf24l01_handle);
+		nrf24l01_clear_receive_irq_flags(nrf24l01_handle);
 	}
 #endif
 

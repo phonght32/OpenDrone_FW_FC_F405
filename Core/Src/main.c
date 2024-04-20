@@ -24,10 +24,18 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "hw_intf.h"
 #include "periph_radio.h"
+#include "OpenDrone_TxProto.h"
 /* USER CODE END Includes */
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
+#define IDX_TIME_RECV_CONTROL       0
+#define IDX_TIME_CLEAR_RADIO_IRQ    1
+#define NUM_OF_IDX_TIME             2
+
+#define TIME_RECV_CONTROL           1000
+#define TIME_CLEAR_RADIO_IRQ        500
 /* USER CODE END PTD */
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
@@ -37,6 +45,8 @@
 /* USER CODE END PM */
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN PV */
+uint32_t last_time_us[NUM_OF_IDX_TIME] = {0};
+OpenDrone_TxProto_Msg_OprCtrl_t OpenDrone_TxProto_Msg_OprCtrl = {0};
 /* USER CODE END PV */
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
@@ -73,6 +83,19 @@ int main(void)
     /* USER CODE BEGIN WHILE */
     while (1)
     {
+        uint32_t current_time = hw_intf_get_time_us();
+
+        if ((current_time - last_time_us[IDX_TIME_CLEAR_RADIO_IRQ]) > TIME_CLEAR_RADIO_IRQ)
+        {
+            periph_radio_clear_transmit_irq_flags();
+
+            last_time_us[IDX_TIME_CLEAR_RADIO_IRQ] = current_time;
+        }
+
+        if ((current_time - last_time_us[IDX_TIME_RECV_CONTROL]) > TIME_RECV_CONTROL)
+        {
+            last_time_us[IDX_TIME_RECV_CONTROL] = current_time;
+        }
         /* USER CODE END WHILE */
         /* USER CODE BEGIN 3 */
     }
