@@ -24,6 +24,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "periph_radio.h"
 /* USER CODE END Includes */
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
@@ -66,6 +67,7 @@ int main(void)
     MX_SPI2_Init();
     MX_TIM1_Init();
     /* USER CODE BEGIN 2 */
+    periph_radio_init();
     /* USER CODE END 2 */
     /* Infinite loop */
     /* USER CODE BEGIN WHILE */
