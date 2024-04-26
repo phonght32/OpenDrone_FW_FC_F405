@@ -31,6 +31,10 @@
 #define MPU6050_I2C  					hi2c1
 #endif
 
+#ifdef USE_HMC5883L
+#define HMC5883L_I2C  					hi2c1
+#endif
+
 uint32_t hw_intf_get_time_us(void)
 {
 	return __HAL_TIM_GET_COUNTER(&APP_TIM);
@@ -137,6 +141,33 @@ err_code_t hw_intf_mpu6050_i2c_recv(uint8_t reg_addr, uint8_t *buf, uint16_t len
 
 	HAL_I2C_Master_Transmit(&MPU6050_I2C, MPU6050_I2C_ADDR, buffer, 1, 100);
 	HAL_I2C_Master_Receive(&MPU6050_I2C, MPU6050_I2C_ADDR, buf, len, 100);
+
+	return ERR_CODE_SUCCESS;
+}
+#endif
+
+#ifdef USE_HMC5883L
+err_code_t hw_intf_hmc5883l_i2c_send(uint8_t reg_addr, uint8_t *buf, uint16_t len)
+{
+	uint8_t buf_send[len + 1];
+	buf_send[0] = reg_addr;
+	for (uint8_t i = 0; i < len; i++)
+	{
+		buf_send[i + 1] = buf[i];
+	}
+
+	HAL_I2C_Master_Transmit(&HMC5883L_I2C, HMC5883L_I2C_ADDR, buf_send, len + 1, 100);
+
+	return ERR_CODE_SUCCESS;
+}
+
+err_code_t hw_intf_hmc5883l_i2c_recv(uint8_t reg_addr, uint8_t *buf, uint16_t len)
+{
+	uint8_t buffer[1];
+	buffer[0] = reg_addr;
+
+	HAL_I2C_Master_Transmit(&HMC5883L_I2C, HMC5883L_I2C_ADDR, buffer, 1, 100);
+	HAL_I2C_Master_Receive(&HMC5883L_I2C, HMC5883L_I2C_ADDR, buf, len, 100);
 
 	return ERR_CODE_SUCCESS;
 }
