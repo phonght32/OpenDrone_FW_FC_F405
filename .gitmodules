@@ -17,3 +17,6 @@
 [submodule "Components/hmc5883l"]
 	path = Components/hmc5883l
 	url = git@github.com:phonght32/hmc5883l.git
+[submodule "Components/esc_dshot"]
+	path = Components/esc_dshot
+	url = git@github.com:phonght32/esc_dshot.git
