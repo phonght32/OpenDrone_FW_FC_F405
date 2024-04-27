@@ -1,6 +1,7 @@
 #include "spi.h"
 #include "tim.h"
 #include "i2c.h"
+#include "usart.h"
 
 #include "hw_intf.h"
 #include "mpu6050.h"
@@ -8,6 +9,10 @@
 #include "esc_dshot.h"
 
 #define APP_TIM 						htim3
+
+#ifdef USE_SERIAL_DEBUG
+#define UART_DEBUG  					huart1
+#endif
 
 #ifdef USE_NRF24L01
 #define NRF24L01_SPI                 	hspi2
@@ -72,6 +77,15 @@ void hw_intf_delay_ms(uint32_t time_ms)
 {
 	HAL_Delay(time_ms);
 }
+
+#ifdef USE_SERIAL_DEBUG
+err_code_t hw_intf_uart_debug_send(uint8_t *log_buf, uint16_t len)
+{
+	HAL_UART_Transmit(&UART_DEBUG, (uint8_t*)log_buf, len, 100);
+
+	return ERR_CODE_SUCCESS;
+}
+#endif
 
 #ifdef USE_NRF24L01
 err_code_t hw_intf_nrf24l01_spi_send(uint8_t *buf_send, uint16_t len)

@@ -27,6 +27,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "stdio.h"
 #include "hw_intf.h"
 #include "periph_radio.h"
 #include "periph_imu.h"
@@ -50,6 +51,10 @@
 /* USER CODE END PM */
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN PV */
+#ifdef USE_SERIAL_DEBUG
+uint8_t log_buf[50];
+#endif
+
 uint32_t last_time_us[NUM_OF_IDX_TIME] = {0};
 OpenDrone_TxProto_Msg_OprCtrl_t OpenDrone_TxProto_Msg_OprCtrl = {0};
 /* USER CODE END PV */
@@ -88,8 +93,22 @@ int main(void)
     MX_USART1_UART_Init();
     /* USER CODE BEGIN 2 */
     periph_imu_init();
+#ifdef USE_SERIAL_DEBUG
+    sprintf((char *)log_buf, "Init peripheral imu complete");
+    hw_intf_uart_debug_send(log_buf, 28);
+#endif
+
     periph_radio_init();
+#ifdef USE_SERIAL_DEBUG
+    sprintf((char *)log_buf, "Init peripheral radio complete");
+    hw_intf_uart_debug_send(log_buf, 30);
+#endif
+
     periph_esc_init();
+#ifdef USE_SERIAL_DEBUG
+    sprintf((char *)log_buf, "Init peripheral esc complete");
+    hw_intf_uart_debug_send(log_buf, 28);
+#endif
     /* USER CODE END 2 */
     /* Infinite loop */
     /* USER CODE BEGIN WHILE */

@@ -33,6 +33,10 @@ extern "C" {
 uint32_t hw_intf_get_time_us(void);
 void hw_intf_delay_ms(uint32_t time_ms);
 
+#ifdef USE_SERIAL_DEBUG
+err_code_t hw_intf_uart_debug_send(uint8_t *log_buf, uint16_t len);
+#endif
+
 #ifdef USE_NRF24L01
 err_code_t hw_intf_nrf24l01_spi_send(uint8_t *buf_send, uint16_t len);
 err_code_t hw_intf_nrf24l01_spi_recv(uint8_t *buf_recv, uint16_t len);
