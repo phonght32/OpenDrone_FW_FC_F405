@@ -29,6 +29,7 @@
 #include "hw_intf.h"
 #include "periph_radio.h"
 #include "periph_imu.h"
+#include "periph_esc.h"
 #include "OpenDrone_TxProto.h"
 /* USER CODE END Includes */
 /* Private typedef -----------------------------------------------------------*/
@@ -86,6 +87,7 @@ int main(void)
     /* USER CODE BEGIN 2 */
     periph_imu_init();
     periph_radio_init();
+    periph_esc_init();
     /* USER CODE END 2 */
     /* Infinite loop */
     /* USER CODE BEGIN WHILE */
