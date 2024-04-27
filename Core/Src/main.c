@@ -18,6 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "dma.h"
 #include "i2c.h"
 #include "spi.h"
 #include "tim.h"
@@ -76,9 +77,12 @@ int main(void)
     /* USER CODE END SysInit */
     /* Initialize all configured peripherals */
     MX_GPIO_Init();
+    MX_DMA_Init();
     MX_SPI2_Init();
-    MX_TIM1_Init();
     MX_I2C1_Init();
+    MX_TIM3_Init();
+    MX_TIM1_Init();
+    MX_TIM2_Init();
     /* USER CODE BEGIN 2 */
     periph_imu_init();
     periph_radio_init();

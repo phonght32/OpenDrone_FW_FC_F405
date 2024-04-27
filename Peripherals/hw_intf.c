@@ -4,8 +4,10 @@
 
 #include "hw_intf.h"
 #include "mpu6050.h"
+#include "hmc5883l.h"
+#include "esc_dshot.h"
 
-#define APP_TIM 						htim1
+#define APP_TIM 						htim3
 
 #ifdef USE_NRF24L01
 #define NRF24L01_SPI                 	hspi2
@@ -33,6 +35,32 @@
 
 #ifdef USE_HMC5883L
 #define HMC5883L_I2C  					hi2c1
+#endif
+
+#ifdef USE_ESC_DSHOT
+#define FL_ESC_DSHOT_TIM  				htim1
+#define FL_ESC_DSHOT_TIM_CHNL 			TIM_CHANNEL_2
+#define FL_ESC_DSHOT_TIM_DMA_ID 		TIM_DMA_ID_CC2
+#define FL_ESC_DSHOT_TIM_DMA_CC			TIM_DMA_CC2
+#define FL_ESC_DSHOT_TIM_CCR   			CCR2
+
+#define FR_ESC_DSHOT_TIM  				htim1
+#define FR_ESC_DSHOT_TIM_CHNL   		TIM_CHANNEL_3
+#define FR_ESC_DSHOT_TIM_DMA_ID 		TIM_DMA_ID_CC3
+#define FR_ESC_DSHOT_TIM_DMA_CC			TIM_DMA_CC3
+#define FR_ESC_DSHOT_TIM_CCR   			CCR3
+
+#define BL_ESC_DSHOT_TIM  				htim2
+#define BL_ESC_DSHOT_TIM_CHNL   		TIM_CHANNEL_4
+#define BL_ESC_DSHOT_TIM_DMA_ID 		TIM_DMA_ID_CC4
+#define BL_ESC_DSHOT_TIM_DMA_CC			TIM_DMA_CC4
+#define BL_ESC_DSHOT_TIM_CCR   			CCR4
+
+#define BR_ESC_DSHOT_TIM  				htim2
+#define BR_ESC_DSHOT_TIM_CHNL   		TIM_CHANNEL_3
+#define BR_ESC_DSHOT_TIM_DMA_ID 		TIM_DMA_ID_CC3
+#define BR_ESC_DSHOT_TIM_DMA_CC			TIM_DMA_CC3
+#define BR_ESC_DSHOT_TIM_CCR   			CCR3
 #endif
 
 uint32_t hw_intf_get_time_us(void)
@@ -168,6 +196,78 @@ err_code_t hw_intf_hmc5883l_i2c_recv(uint8_t reg_addr, uint8_t *buf, uint16_t le
 
 	HAL_I2C_Master_Transmit(&HMC5883L_I2C, HMC5883L_I2C_ADDR, buffer, 1, 100);
 	HAL_I2C_Master_Receive(&HMC5883L_I2C, HMC5883L_I2C_ADDR, buf, len, 100);
+
+	return ERR_CODE_SUCCESS;
+}
+#endif
+
+#ifdef USE_ESC_DSHOT
+err_code_t hw_intf_fl_esc_dshot_set_auto_reload(uint32_t auto_reload)
+{
+	__HAL_TIM_SET_AUTORELOAD(&FL_ESC_DSHOT_TIM, auto_reload);
+
+	return ERR_CODE_SUCCESS;
+}
+
+err_code_t hw_intf_fr_esc_dshot_set_auto_reload(uint32_t auto_reload)
+{
+	__HAL_TIM_SET_AUTORELOAD(&FR_ESC_DSHOT_TIM, auto_reload);
+
+	return ERR_CODE_SUCCESS;
+}
+
+err_code_t hw_intf_bl_esc_dshot_set_auto_reload(uint32_t auto_reload)
+{
+	__HAL_TIM_SET_AUTORELOAD(&BL_ESC_DSHOT_TIM, auto_reload);
+
+	return ERR_CODE_SUCCESS;
+}
+
+err_code_t hw_intf_br_esc_dshot_set_auto_reload(uint32_t auto_reload)
+{
+	__HAL_TIM_SET_AUTORELOAD(&BR_ESC_DSHOT_TIM, auto_reload);
+
+	return ERR_CODE_SUCCESS;
+}
+
+err_code_t hw_intf_fl_esc_dshot_send_dma(uint32_t *packet_dma)
+{
+	HAL_DMA_Start((&FL_ESC_DSHOT_TIM)->hdma[FL_ESC_DSHOT_TIM_DMA_ID], (uint32_t)packet_dma, (uint32_t)(&FL_ESC_DSHOT_TIM)->Instance->FL_ESC_DSHOT_TIM_CCR, DSHOT_DMA_BUFFER);
+	__HAL_TIM_ENABLE_DMA(&FL_ESC_DSHOT_TIM, FL_ESC_DSHOT_TIM_DMA_CC);
+
+	return ERR_CODE_SUCCESS;
+}
+
+err_code_t hw_intf_fr_esc_dshot_send_dma(uint32_t *packet_dma)
+{
+	HAL_DMA_Start((&FR_ESC_DSHOT_TIM)->hdma[FR_ESC_DSHOT_TIM_DMA_ID], (uint32_t)packet_dma, (uint32_t)(&FR_ESC_DSHOT_TIM)->Instance->FR_ESC_DSHOT_TIM_CCR, DSHOT_DMA_BUFFER);
+	__HAL_TIM_ENABLE_DMA(&FR_ESC_DSHOT_TIM, FR_ESC_DSHOT_TIM_DMA_CC);
+
+	return ERR_CODE_SUCCESS;
+}
+
+err_code_t hw_intf_bl_esc_dshot_send_dma(uint32_t *packet_dma)
+{
+	HAL_DMA_Start((&BL_ESC_DSHOT_TIM)->hdma[BL_ESC_DSHOT_TIM_DMA_ID], (uint32_t)packet_dma, (uint32_t)(&BL_ESC_DSHOT_TIM)->Instance->BL_ESC_DSHOT_TIM_CCR, DSHOT_DMA_BUFFER);
+	__HAL_TIM_ENABLE_DMA(&BL_ESC_DSHOT_TIM, BL_ESC_DSHOT_TIM_DMA_CC);
+
+	return ERR_CODE_SUCCESS;
+}
+
+err_code_t hw_intf_br_esc_dshot_send_dma(uint32_t *packet_dma)
+{
+	HAL_DMA_Start((&BR_ESC_DSHOT_TIM)->hdma[BR_ESC_DSHOT_TIM_DMA_ID], (uint32_t)packet_dma, (uint32_t)(&BR_ESC_DSHOT_TIM)->Instance->BR_ESC_DSHOT_TIM_CCR, DSHOT_DMA_BUFFER);
+	__HAL_TIM_ENABLE_DMA(&BR_ESC_DSHOT_TIM, BR_ESC_DSHOT_TIM_DMA_CC);
+
+	return ERR_CODE_SUCCESS;
+}
+
+err_code_t hw_intf_esc_dshot_start(void)
+{
+	HAL_TIM_PWM_Start(&FL_ESC_DSHOT_TIM, FL_ESC_DSHOT_TIM_CHNL);
+	HAL_TIM_PWM_Start(&FR_ESC_DSHOT_TIM, FR_ESC_DSHOT_TIM_CHNL);
+	HAL_TIM_PWM_Start(&BL_ESC_DSHOT_TIM, BL_ESC_DSHOT_TIM_CHNL);
+	HAL_TIM_PWM_Start(&BR_ESC_DSHOT_TIM, BR_ESC_DSHOT_TIM_CHNL);
 
 	return ERR_CODE_SUCCESS;
 }

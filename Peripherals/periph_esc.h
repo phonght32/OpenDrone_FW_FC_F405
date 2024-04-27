@@ -30,6 +30,8 @@ extern "C" {
 #include "err_code.h"
 
 err_code_t periph_esc_init(void);
+err_code_t periph_esc_prepare_packet(uint16_t fl_throttle, uint16_t fr_throttle, uint16_t bl_throttle, uint16_t br_throttle);
+err_code_t periph_esc_send(void);
 
 #ifdef __cplusplus
 }
