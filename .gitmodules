@@ -20,3 +20,6 @@
 [submodule "Components/esc_dshot"]
 	path = Components/esc_dshot
 	url = git@github.com:phonght32/esc_dshot.git
+[submodule "Components/bmp180"]
+	path = Components/bmp180
+	url = git@github.com:phonght32/bmp180.git
