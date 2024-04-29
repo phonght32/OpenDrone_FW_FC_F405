@@ -23,3 +23,6 @@
 [submodule "Components/bmp180"]
 	path = Components/bmp180
 	url = git@github.com:phonght32/bmp180.git
+[submodule "Components/bmp280"]
+	path = Components/bmp280
+	url = git@github.com:phonght32/bmp280.git
