@@ -26,3 +26,6 @@
 [submodule "Components/bmp280"]
 	path = Components/bmp280
 	url = git@github.com:phonght32/bmp280.git
+[submodule "Components/max7456"]
+	path = Components/max7456
+	url = git@github.com:phonght32/max7456.git
