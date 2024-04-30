@@ -39,6 +39,7 @@ err_code_t periph_imu_init(void)
 	};
 	mpu6050_set_config(mpu6050_handle, mpu6050_cfg);
 	mpu6050_config(mpu6050_handle);
+	mpu6050_auto_calib(mpu6050_handle);
 #endif
 
 #ifdef USE_HMC5883L
