@@ -36,12 +36,12 @@
 /* USER CODE END Includes */
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-#define IDX_TIME_RECV_CONTROL       0
-#define IDX_TIME_CLEAR_RADIO_IRQ    1
+#define IDX_FREQ_1000_HZ            0
+#define IDX_FREQ_2000_HZ            1
 #define NUM_OF_IDX_TIME             2
 
-#define TIME_RECV_CONTROL           1000
-#define TIME_CLEAR_RADIO_IRQ        500
+#define FREQ_1000_HZ_TIME_US        1000
+#define FREQ_2000_HZ_TIME_US        500
 /* USER CODE END PTD */
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
@@ -116,18 +116,18 @@ int main(void)
     {
         uint32_t current_time = hw_intf_get_time_us();
 
-        if ((current_time - last_time_us[IDX_TIME_CLEAR_RADIO_IRQ]) > TIME_CLEAR_RADIO_IRQ)
+        if ((current_time - last_time_us[IDX_FREQ_2000_HZ]) > FREQ_2000_HZ_TIME_US)
         {
             periph_radio_clear_transmit_irq_flags();
 
-            last_time_us[IDX_TIME_CLEAR_RADIO_IRQ] = current_time;
+            last_time_us[IDX_FREQ_2000_HZ] = current_time;
         }
 
-        if ((current_time - last_time_us[IDX_TIME_RECV_CONTROL]) > TIME_RECV_CONTROL)
+        if ((current_time - last_time_us[IDX_FREQ_1000_HZ]) > FREQ_1000_HZ_TIME_US)
         {
             periph_radio_receive((uint8_t *)&OpenDrone_TxProto_Msg_OprCtrl);
 
-            last_time_us[IDX_TIME_RECV_CONTROL] = current_time;
+            last_time_us[IDX_FREQ_1000_HZ] = current_time;
         }
         /* USER CODE END WHILE */
         /* USER CODE BEGIN 3 */
