@@ -13,7 +13,7 @@ mpu6050_handle_t mpu6050_handle;
 hmc5883l_handle_t hmc5883l_handle;
 #endif
 
-#ifdef USE_IMU_MADGWICK
+#ifdef USE_IMU_MADGWICK_6DOF
 imu_madgwick_handle_t imu_madgwick_handle = NULL;
 #endif
 
@@ -59,7 +59,7 @@ err_code_t periph_imu_init(void)
 	hmc5883l_config(hmc5883l_handle);
 #endif
 
-#ifdef USE_IMU_MADGWICK
+#ifdef USE_IMU_MADGWICK_6DOF
 	imu_madgwick_handle = imu_madgwick_init();
 	imu_madgwick_cfg_t imu_madgwick_cfg = {
 		.beta 		 = CONFIG_IMU_MADGWICK_BETA,
@@ -92,7 +92,7 @@ err_code_t periph_imu_update_quat(void)
 	}
 #endif
 
-#ifdef USE_IMU_MADGWICK
+#ifdef USE_IMU_MADGWICK_6DOF
 	err_ret = imu_madgwick_update_6dof(imu_madgwick_handle, gyro_x, gyro_y, gyro_z, accel_x, accel_y, accel_z);
 	if (err_ret != ERR_CODE_SUCCESS)
 	{
@@ -105,7 +105,7 @@ err_code_t periph_imu_update_quat(void)
 
 err_code_t periph_imu_get_quat(float *q0, float *q1, float *q2, float* q3)
 {
-#ifdef USE_IMU_MADGWICK
+#ifdef USE_IMU_MADGWICK_6DOF
 	err_code_t err_ret = imu_madgwick_get_quaternion(imu_madgwick_handle, q0, q1, q2, q3);
 	if (err_ret != ERR_CODE_SUCCESS)
 	{
@@ -149,7 +149,7 @@ err_code_t periph_imu_get_gyro(float *gyro_x, float *gyro_y, float* gyro_z)
 
 err_code_t periph_imu_get_angel(float *roll, float *pitch, float *yaw)
 {
-#ifdef USE_IMU_MADGWICK
+#ifdef USE_IMU_MADGWICK_6DOF
 	err_code_t err_ret;
 	float q0, q1, q2, q3;
 

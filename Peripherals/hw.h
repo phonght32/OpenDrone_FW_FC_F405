@@ -37,7 +37,7 @@ extern "C" {
 
 #define USE_ESC_DSHOT
 
-#define USE_IMU_MADGWICK
+#define USE_IMU_MADGWICK_6DOF
 
 
 #define CONFIG_NRF24L01_CHANNEL				2500
