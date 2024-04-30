@@ -71,3 +71,98 @@ err_code_t periph_imu_init(void)
 
 	return ERR_CODE_SUCCESS;
 }
+
+err_code_t periph_imu_update_quat(void)
+{
+	err_code_t err_ret;
+	float accel_x, accel_y, accel_z;
+	float gyro_x, gyro_y, gyro_z;
+
+#ifdef USE_MPU6050
+	err_ret = mpu6050_get_accel_scale(mpu6050_handle, &accel_x, &accel_y, &accel_z);
+	if (err_ret != ERR_CODE_SUCCESS)
+	{
+		return err_ret;
+	}
+
+	err_ret = mpu6050_get_gyro_scale(mpu6050_handle, &gyro_x, &gyro_y, &gyro_z);
+	if (err_ret != ERR_CODE_SUCCESS)
+	{
+		return err_ret;
+	}
+#endif
+
+#ifdef USE_IMU_MADGWICK
+	err_ret = imu_madgwick_update_6dof(imu_madgwick_handle, gyro_x, gyro_y, gyro_z, accel_x, accel_y, accel_z);
+	if (err_ret != ERR_CODE_SUCCESS)
+	{
+		return err_ret;
+	}
+#endif
+
+	return ERR_CODE_SUCCESS;
+}
+
+err_code_t periph_imu_get_quat(float *q0, float *q1, float *q2, float* q3)
+{
+#ifdef USE_IMU_MADGWICK
+	err_code_t err_ret = imu_madgwick_get_quaternion(imu_madgwick_handle, q0, q1, q2, q3);
+	if (err_ret != ERR_CODE_SUCCESS)
+	{
+		return err_ret;
+	}
+#endif
+
+	return ERR_CODE_SUCCESS;
+}
+
+err_code_t periph_imu_get_accel(float *accel_x, float *accel_y, float* accel_z)
+{
+	err_code_t err_ret;
+
+#ifdef USE_MPU6050
+	err_ret = mpu6050_get_accel_scale(mpu6050_handle, accel_x, accel_y, accel_z);
+#endif
+	if (err_ret != ERR_CODE_SUCCESS)
+	{
+		return err_ret;
+	}
+
+	return ERR_CODE_SUCCESS;
+}
+
+err_code_t periph_imu_get_gyro(float *gyro_x, float *gyro_y, float* gyro_z)
+{
+	err_code_t err_ret;
+
+#ifdef USE_MPU6050
+	err_ret = mpu6050_get_gyro_scale(mpu6050_handle, gyro_x, gyro_y, gyro_z);
+#endif
+	if (err_ret != ERR_CODE_SUCCESS)
+	{
+		return err_ret;
+	}
+
+
+	return ERR_CODE_SUCCESS;
+}
+
+err_code_t periph_imu_get_angel(float *roll, float *pitch, float *yaw)
+{
+#ifdef USE_IMU_MADGWICK
+	err_code_t err_ret;
+	float q0, q1, q2, q3;
+
+	err_ret = imu_madgwick_get_quaternion(imu_madgwick_handle, &q0, &q1, &q2, &q3);
+	if (err_ret != ERR_CODE_SUCCESS)
+	{
+		return err_ret;
+	}
+
+	*roll = 180.0 / 3.14 * atan2(2 * (q0 * q1 + q2 * q3), 1 - 2 * (q1 * q1 + q2 * q2));
+	*pitch = 180.0 / 3.14 * asin(2 * (q0 * q2 - q3 * q1));
+	*yaw = 180.0 / 3.14 * atan2f(q0 * q3 + q1 * q2, 0.5f - q2 * q2 - q3 * q3);
+#endif
+
+	return ERR_CODE_SUCCESS;
+}
