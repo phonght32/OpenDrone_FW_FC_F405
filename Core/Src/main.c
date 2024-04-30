@@ -116,6 +116,7 @@ int main(void)
     {
         uint32_t current_time = hw_intf_get_time_us();
 
+        /* Task 2000 Hz */
         if ((current_time - last_time_us[IDX_FREQ_2000_HZ]) > FREQ_2000_HZ_TIME_US)
         {
             periph_radio_clear_transmit_irq_flags();
@@ -123,11 +124,14 @@ int main(void)
             last_time_us[IDX_FREQ_2000_HZ] = current_time;
         }
 
+        /* Task 1000 Hz */
         if ((current_time - last_time_us[IDX_FREQ_1000_HZ]) > FREQ_1000_HZ_TIME_US)
         {
-            periph_imu_update();
-
             periph_radio_receive((uint8_t *)&OpenDrone_TxProto_Msg_OprCtrl);
+
+            periph_imu_update_accel();
+            periph_imu_update_gyro();
+            periph_imu_update_filter();
 
             last_time_us[IDX_FREQ_1000_HZ] = current_time;
         }

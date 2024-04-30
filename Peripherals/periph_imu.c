@@ -5,6 +5,25 @@
 #include "hmc5883l.h"
 #include "imu_madgwick.h"
 
+#define MAX_IMU_SAMPLES  	10
+
+typedef struct {
+	float accel_x;
+	float accel_y;
+	float accel_z;
+	float gyro_x;
+	float gyro_y;
+	float gyro_z;
+	float mag_x;
+	float mag_y;
+	float mag_z;
+} imu_data_t;
+
+imu_data_t imu_data_sum = {0};
+uint8_t num_accel_samples = 0;
+uint8_t num_gyro_samples = 0;
+uint8_t num_mag_samples = 0;
+
 #ifdef USE_MPU6050
 mpu6050_handle_t mpu6050_handle;
 #endif
@@ -73,11 +92,10 @@ err_code_t periph_imu_init(void)
 	return ERR_CODE_SUCCESS;
 }
 
-err_code_t periph_imu_update(void)
+err_code_t periph_imu_update_accel(void)
 {
 	err_code_t err_ret;
 	float accel_x, accel_y, accel_z;
-	float gyro_x, gyro_y, gyro_z;
 
 #ifdef USE_MPU6050
 	err_ret = mpu6050_get_accel_scale(mpu6050_handle, &accel_x, &accel_y, &accel_z);
@@ -85,13 +103,72 @@ err_code_t periph_imu_update(void)
 	{
 		return err_ret;
 	}
+#endif
 
+	imu_data_sum.accel_x += accel_x;
+	imu_data_sum.accel_y += accel_y;
+	imu_data_sum.accel_z += accel_z;
+
+	num_accel_samples += 1;
+
+	return ERR_CODE_SUCCESS;
+}
+
+err_code_t periph_imu_update_gyro(void)
+{
+	err_code_t err_ret;
+	float gyro_x, gyro_y, gyro_z;
+
+#ifdef USE_MPU6050
 	err_ret = mpu6050_get_gyro_scale(mpu6050_handle, &gyro_x, &gyro_y, &gyro_z);
 	if (err_ret != ERR_CODE_SUCCESS)
 	{
 		return err_ret;
 	}
 #endif
+
+	imu_data_sum.gyro_x += gyro_x;
+	imu_data_sum.gyro_y += gyro_y;
+	imu_data_sum.gyro_z += gyro_z;
+
+	num_gyro_samples += 1;
+
+	return ERR_CODE_SUCCESS;
+}
+
+err_code_t periph_imu_update_mag(void)
+{
+	return ERR_CODE_SUCCESS;
+}
+
+err_code_t periph_imu_update_filter(void)
+{
+	err_code_t err_ret;
+	float accel_x = 0, accel_y = 0, accel_z = 0, gyro_x = 0, gyro_y = 0, gyro_z = 0;
+
+	if (num_accel_samples != 0)
+	{
+		accel_x = imu_data_sum.accel_x / num_accel_samples;
+		accel_y = imu_data_sum.accel_y / num_accel_samples;
+		accel_z = imu_data_sum.accel_z / num_accel_samples;
+
+		num_accel_samples = 0;
+		imu_data_sum.accel_x = 0;
+		imu_data_sum.accel_y = 0;
+		imu_data_sum.accel_z = 0;
+	}
+
+	if (num_gyro_samples != 0)
+	{
+		gyro_x = imu_data_sum.gyro_x / num_gyro_samples;
+		gyro_y = imu_data_sum.gyro_y / num_gyro_samples;
+		gyro_z = imu_data_sum.gyro_z / num_gyro_samples;
+
+		num_gyro_samples = 0;
+		imu_data_sum.gyro_x = 0;
+		imu_data_sum.gyro_y = 0;
+		imu_data_sum.gyro_z = 0;
+	}
 
 #ifdef USE_IMU_MADGWICK_6DOF
 	err_ret = imu_madgwick_update_6dof(imu_madgwick_handle, gyro_x, gyro_y, gyro_z, accel_x, accel_y, accel_z);
@@ -100,50 +177,6 @@ err_code_t periph_imu_update(void)
 		return err_ret;
 	}
 #endif
-
-	return ERR_CODE_SUCCESS;
-}
-
-err_code_t periph_imu_get_quat(float *q0, float *q1, float *q2, float* q3)
-{
-#ifdef USE_IMU_MADGWICK_6DOF
-	err_code_t err_ret = imu_madgwick_get_quaternion(imu_madgwick_handle, q0, q1, q2, q3);
-	if (err_ret != ERR_CODE_SUCCESS)
-	{
-		return err_ret;
-	}
-#endif
-
-	return ERR_CODE_SUCCESS;
-}
-
-err_code_t periph_imu_get_accel(float *accel_x, float *accel_y, float* accel_z)
-{
-	err_code_t err_ret;
-
-#ifdef USE_MPU6050
-	err_ret = mpu6050_get_accel_scale(mpu6050_handle, accel_x, accel_y, accel_z);
-#endif
-	if (err_ret != ERR_CODE_SUCCESS)
-	{
-		return err_ret;
-	}
-
-	return ERR_CODE_SUCCESS;
-}
-
-err_code_t periph_imu_get_gyro(float *gyro_x, float *gyro_y, float* gyro_z)
-{
-	err_code_t err_ret;
-
-#ifdef USE_MPU6050
-	err_ret = mpu6050_get_gyro_scale(mpu6050_handle, gyro_x, gyro_y, gyro_z);
-#endif
-	if (err_ret != ERR_CODE_SUCCESS)
-	{
-		return err_ret;
-	}
-
 
 	return ERR_CODE_SUCCESS;
 }
