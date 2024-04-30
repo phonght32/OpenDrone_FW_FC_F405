@@ -125,6 +125,8 @@ int main(void)
 
         if ((current_time - last_time_us[IDX_FREQ_1000_HZ]) > FREQ_1000_HZ_TIME_US)
         {
+            periph_imu_update();
+
             periph_radio_receive((uint8_t *)&OpenDrone_TxProto_Msg_OprCtrl);
 
             last_time_us[IDX_FREQ_1000_HZ] = current_time;
