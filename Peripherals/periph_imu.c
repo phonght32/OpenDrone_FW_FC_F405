@@ -3,6 +3,7 @@
 #include "periph_imu.h"
 #include "mpu6050.h"
 #include "hmc5883l.h"
+#include "imu_madgwick.h"
 
 #ifdef USE_MPU6050
 mpu6050_handle_t mpu6050_handle;
@@ -10,6 +11,10 @@ mpu6050_handle_t mpu6050_handle;
 
 #ifdef USE_HMC5883L
 hmc5883l_handle_t hmc5883l_handle;
+#endif
+
+#ifdef USE_IMU_MADGWICK
+imu_madgwick_handle_t imu_madgwick_handle = NULL;
 #endif
 
 err_code_t periph_imu_init(void)
@@ -52,6 +57,16 @@ err_code_t periph_imu_init(void)
 	};
 	hmc5883l_set_config(hmc5883l_handle, hmc5883l_cfg);
 	hmc5883l_config(hmc5883l_handle);
+#endif
+
+#ifdef USE_IMU_MADGWICK
+	imu_madgwick_handle = imu_madgwick_init();
+	imu_madgwick_cfg_t imu_madgwick_cfg = {
+		.beta 		 = CONFIG_IMU_MADGWICK_BETA,
+		.sample_freq = CONFIG_IMU_MADGWICK_SAMPLE_FREQ
+	};
+	imu_madgwick_set_config(imu_madgwick_handle, imu_madgwick_cfg);
+	imu_madgwick_config(imu_madgwick_handle);
 #endif
 
 	return ERR_CODE_SUCCESS;

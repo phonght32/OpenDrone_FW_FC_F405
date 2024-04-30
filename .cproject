@@ -56,6 +56,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FC_F405_FW/Components/mpu6050}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FC_F405_FW/Components/hmc5883l}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FC_F405_FW/Components/esc_dshot}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FC_F405_FW/Components/imu_madgwick}&quot;"/>
 								</option>
 								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c.1444316460" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c"/>
 							</tool>

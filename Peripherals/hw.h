@@ -37,6 +37,8 @@ extern "C" {
 
 #define USE_ESC_DSHOT
 
+#define USE_IMU_MADGWICK
+
 
 #define CONFIG_NRF24L01_CHANNEL				2500
 #define CONFIG_NRF24L01_PAYLOAD_LEN 		32
@@ -74,6 +76,8 @@ extern "C" {
 #define CONFIG_ESC_DSHOT_TIM_FREQ  			12000000
 #define CONFIG_ESC_DSHOT_TYPE  				ESC_DSHOT_TYPE_600
 
+#define CONFIG_IMU_MADGWICK_BETA  			0.1f
+#define CONFIG_IMU_MADGWICK_SAMPLE_FREQ  	28000
 
 #ifdef __cplusplus
 }
