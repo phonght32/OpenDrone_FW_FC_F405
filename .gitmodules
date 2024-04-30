@@ -35,3 +35,6 @@
 [submodule "Components/ssd1306"]
 	path = Components/ssd1306
 	url = git@github.com:phonght32/ssd1306.git
+[submodule "Components/fonts"]
+	path = Components/fonts
+	url = git@github.com:phonght32/fonts.git
