@@ -73,7 +73,7 @@ err_code_t periph_imu_init(void)
 	return ERR_CODE_SUCCESS;
 }
 
-err_code_t periph_imu_update_quat(void)
+err_code_t periph_imu_update(void)
 {
 	err_code_t err_ret;
 	float accel_x, accel_y, accel_z;
