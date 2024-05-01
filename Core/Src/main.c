@@ -36,12 +36,15 @@
 /* USER CODE END Includes */
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-#define IDX_FREQ_1000_HZ            0
-#define IDX_FREQ_5_HZ               1
-#define NUM_OF_IDX_TIME             2
+#define FREQ_HZ_TO_TIME_US(x)       (1000000.0f/(x))
+#define TIME_US_TO_FREQ_HZ(x)       (1000000.0f/(x))
 
-#define FREQ_1000_HZ_TIME_US        1000
-#define FREQ_5_HZ_TIME_US           200000
+#define IDX_TASK_1000_HZ            0
+#define IDX_TASK_5_HZ               1
+#define NUM_OF_TASK                 2
+
+#define FREQ_1000_HZ_TIME_US        FREQ_HZ_TO_TIME_US(1000)
+#define FREQ_5_HZ_TIME_US           FREQ_HZ_TO_TIME_US(5)
 /* USER CODE END PTD */
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
@@ -53,9 +56,10 @@
 /* USER CODE BEGIN PV */
 #ifdef USE_SERIAL_DEBUG
 uint8_t log_buf[50];
+uint16_t task_freq[NUM_OF_TASK];
 #endif
 
-uint32_t last_time_us[NUM_OF_IDX_TIME] = {0};
+uint32_t last_time_us[NUM_OF_TASK] = {0};
 OpenDrone_TxProto_Msg_OprCtrl_t OpenDrone_TxProto_Msg_OprCtrl = {0};
 /* USER CODE END PV */
 /* Private function prototypes -----------------------------------------------*/
@@ -118,7 +122,7 @@ int main(void)
         uint32_t current_time = hw_intf_get_time_us();
 
         /* Task 1000 Hz */
-        if ((current_time - last_time_us[IDX_FREQ_1000_HZ]) > FREQ_1000_HZ_TIME_US)
+        if ((current_time - last_time_us[IDX_TASK_1000_HZ]) > FREQ_1000_HZ_TIME_US)
         {
             periph_radio_clear_transmit_irq_flags();
             periph_radio_receive((uint8_t *)&OpenDrone_TxProto_Msg_OprCtrl);
@@ -127,20 +131,32 @@ int main(void)
             periph_imu_update_gyro();
             periph_imu_update_filter();
 
-            last_time_us[IDX_FREQ_1000_HZ] = current_time;
+#ifdef USE_SERIAL_DEBUG
+            task_freq[IDX_TASK_1000_HZ] = TIME_US_TO_FREQ_HZ(current_time - last_time_us[IDX_TASK_1000_HZ]);
+#endif
+
+            last_time_us[IDX_TASK_1000_HZ] = current_time;
         }
 
         /* Task 5 Hz */
-        if ((current_time - last_time_us[IDX_FREQ_5_HZ]) > FREQ_5_HZ_TIME_US)
+        if ((current_time - last_time_us[IDX_TASK_5_HZ]) > FREQ_5_HZ_TIME_US)
         {
 #ifdef USE_SERIAL_DEBUG
             float debug_roll, debug_pitch, debug_yaw;
             periph_imu_get_angel(&debug_roll, &debug_pitch, &debug_yaw);
 
+            task_freq[IDX_TASK_5_HZ] = TIME_US_TO_FREQ_HZ(current_time - last_time_us[IDX_TASK_5_HZ]);
+
             sprintf((char *)log_buf, "\r\nroll: %7.4f\t\tpitch: %7.4f\t\tyaw: %7.4f\t", debug_roll, debug_pitch, debug_yaw);
             hw_intf_uart_debug_send(log_buf, 50);
+
+            sprintf((char *)log_buf, "\r\nTask 1000 Hz actual frequency: %d Hz", task_freq[IDX_TASK_1000_HZ]);
+            hw_intf_uart_debug_send(log_buf, 45);
+
+            sprintf((char *)log_buf, "\r\nTask 5 Hz actual frequency: %d Hz", task_freq[IDX_TASK_5_HZ]);
+            hw_intf_uart_debug_send(log_buf, 45);
 #endif
-            last_time_us[IDX_FREQ_5_HZ] = current_time;
+            last_time_us[IDX_TASK_5_HZ] = current_time;
         }
         /* USER CODE END WHILE */
         /* USER CODE BEGIN 3 */
