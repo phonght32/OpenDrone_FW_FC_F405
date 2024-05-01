@@ -35,6 +35,7 @@
 #endif
 
 #ifdef USE_MPU6050
+#define I2C_ADDR_MPU6050   				(MPU6050_I2C_ADDR<<1)
 #define MPU6050_I2C  					hi2c1
 #endif
 
@@ -70,7 +71,7 @@
 
 uint32_t hw_intf_get_time_us(void)
 {
-	return __HAL_TIM_GET_COUNTER(&APP_TIM);
+	return HAL_GetTick() * 1000;
 }
 
 void hw_intf_delay_ms(uint32_t time_ms)
@@ -171,7 +172,7 @@ err_code_t hw_intf_mpu6050_i2c_send(uint8_t reg_addr, uint8_t *buf, uint16_t len
 		buf_send[i + 1] = buf[i];
 	}
 
-	HAL_I2C_Master_Transmit(&MPU6050_I2C, MPU6050_I2C_ADDR, buf_send, len + 1, 100);
+	HAL_I2C_Master_Transmit(&MPU6050_I2C, I2C_ADDR_MPU6050, buf_send, len + 1, 100);
 
 	return ERR_CODE_SUCCESS;
 }
@@ -181,8 +182,8 @@ err_code_t hw_intf_mpu6050_i2c_recv(uint8_t reg_addr, uint8_t *buf, uint16_t len
 	uint8_t buffer[1];
 	buffer[0] = reg_addr;
 
-	HAL_I2C_Master_Transmit(&MPU6050_I2C, MPU6050_I2C_ADDR, buffer, 1, 100);
-	HAL_I2C_Master_Receive(&MPU6050_I2C, MPU6050_I2C_ADDR, buf, len, 100);
+	HAL_I2C_Master_Transmit(&MPU6050_I2C, I2C_ADDR_MPU6050, buffer, 1, 100);
+	HAL_I2C_Master_Receive(&MPU6050_I2C, I2C_ADDR_MPU6050, buf, len, 100);
 
 	return ERR_CODE_SUCCESS;
 }
