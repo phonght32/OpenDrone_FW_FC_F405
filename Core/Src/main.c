@@ -37,12 +37,10 @@
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
 #define IDX_FREQ_1000_HZ            0
-#define IDX_FREQ_2000_HZ            1
-#define IDX_FREQ_5_HZ               2
-#define NUM_OF_IDX_TIME             3
+#define IDX_FREQ_5_HZ               1
+#define NUM_OF_IDX_TIME             2
 
 #define FREQ_1000_HZ_TIME_US        1000
-#define FREQ_2000_HZ_TIME_US        500
 #define FREQ_5_HZ_TIME_US           200000
 /* USER CODE END PTD */
 /* Private define ------------------------------------------------------------*/
@@ -119,17 +117,10 @@ int main(void)
     {
         uint32_t current_time = hw_intf_get_time_us();
 
-        /* Task 2000 Hz */
-        if ((current_time - last_time_us[IDX_FREQ_2000_HZ]) > FREQ_2000_HZ_TIME_US)
-        {
-            periph_radio_clear_transmit_irq_flags();
-
-            last_time_us[IDX_FREQ_2000_HZ] = current_time;
-        }
-
         /* Task 1000 Hz */
         if ((current_time - last_time_us[IDX_FREQ_1000_HZ]) > FREQ_1000_HZ_TIME_US)
         {
+            periph_radio_clear_transmit_irq_flags();
             periph_radio_receive((uint8_t *)&OpenDrone_TxProto_Msg_OprCtrl);
 
             periph_imu_update_accel();
@@ -143,10 +134,10 @@ int main(void)
         if ((current_time - last_time_us[IDX_FREQ_5_HZ]) > FREQ_5_HZ_TIME_US)
         {
 #ifdef USE_SERIAL_DEBUG
-            float roll, pitch, yaw;
-            periph_imu_get_angel(&roll, &pitch, &yaw);
+            float debug_roll, debug_pitch, debug_yaw;
+            periph_imu_get_angel(&debug_roll, &debug_pitch, &debug_yaw);
 
-            sprintf((char *)log_buf, "\r\nroll: %7.4f\t\tpitch: %7.4f\t\tyaw: %7.4f\t", roll, pitch, yaw);
+            sprintf((char *)log_buf, "\r\nroll: %7.4f\t\tpitch: %7.4f\t\tyaw: %7.4f\t", debug_roll, debug_pitch, debug_yaw);
             hw_intf_uart_debug_send(log_buf, 50);
 #endif
             last_time_us[IDX_FREQ_5_HZ] = current_time;
