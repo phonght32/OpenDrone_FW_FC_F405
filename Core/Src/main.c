@@ -127,7 +127,6 @@ int main(void)
         if ((current_time - last_time_us[IDX_TASK_500_HZ]) > FREQ_500_HZ_TIME_US)
         {
             periph_radio_clear_transmit_irq_flags();
-            periph_radio_receive((uint8_t *)&OpenDrone_TxProto_Msg_OprCtrl);
 
             periph_imu_update_accel();
             periph_imu_update_gyro();
@@ -143,6 +142,8 @@ int main(void)
         /* Task 50 Hz */
         if ((current_time - last_time_us[IDX_TASK_50_HZ]) > FREQ_50_HZ_TIME_US)
         {
+            periph_radio_receive((uint8_t *)&OpenDrone_TxProto_Msg_OprCtrl);
+            
 #ifdef USE_SERIAL_DEBUG
             task_freq[IDX_TASK_50_HZ] = TIME_US_TO_FREQ_HZ(current_time - last_time_us[IDX_TASK_50_HZ]);
 #endif
