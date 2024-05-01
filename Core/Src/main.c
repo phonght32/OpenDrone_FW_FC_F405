@@ -40,10 +40,12 @@
 #define TIME_US_TO_FREQ_HZ(x)       (1000000.0f/(x))
 
 #define IDX_TASK_500_HZ             0
-#define IDX_TASK_5_HZ               1
-#define NUM_OF_TASK                 2
+#define IDX_TASK_50_HZ              1
+#define IDX_TASK_5_HZ               2
+#define NUM_OF_TASK                 3
 
 #define FREQ_500_HZ_TIME_US         FREQ_HZ_TO_TIME_US(500)
+#define FREQ_50_HZ_TIME_US          FREQ_HZ_TO_TIME_US(50)
 #define FREQ_5_HZ_TIME_US           FREQ_HZ_TO_TIME_US(5)
 /* USER CODE END PTD */
 /* Private define ------------------------------------------------------------*/
@@ -121,7 +123,7 @@ int main(void)
     {
         uint32_t current_time = hw_intf_get_time_us();
 
-        /* Task 1000 Hz */
+        /* Task 500 Hz */
         if ((current_time - last_time_us[IDX_TASK_500_HZ]) > FREQ_500_HZ_TIME_US)
         {
             periph_radio_clear_transmit_irq_flags();
@@ -138,6 +140,16 @@ int main(void)
             last_time_us[IDX_TASK_500_HZ] = current_time;
         }
 
+        /* Task 50 Hz */
+        if ((current_time - last_time_us[IDX_TASK_50_HZ]) > FREQ_50_HZ_TIME_US)
+        {
+#ifdef USE_SERIAL_DEBUG
+            task_freq[IDX_TASK_50_HZ] = TIME_US_TO_FREQ_HZ(current_time - last_time_us[IDX_TASK_50_HZ]);
+#endif
+
+            last_time_us[IDX_TASK_50_HZ] = current_time;
+        }
+
         /* Task 5 Hz */
         if ((current_time - last_time_us[IDX_TASK_5_HZ]) > FREQ_5_HZ_TIME_US)
         {
@@ -150,7 +162,10 @@ int main(void)
             sprintf((char *)log_buf, "\r\nroll: %7.4f\t\tpitch: %7.4f\t\tyaw: %7.4f\t", debug_roll, debug_pitch, debug_yaw);
             hw_intf_uart_debug_send(log_buf, 50);
 
-            sprintf((char *)log_buf, "\r\nTask 1000 Hz actual frequency: %d Hz", task_freq[IDX_TASK_500_HZ]);
+            sprintf((char *)log_buf, "\r\nTask 500 Hz actual frequency: %d Hz", task_freq[IDX_TASK_500_HZ]);
+            hw_intf_uart_debug_send(log_buf, 45);
+
+            sprintf((char *)log_buf, "\r\nTask 50 Hz actual frequency: %d Hz", task_freq[IDX_TASK_50_HZ]);
             hw_intf_uart_debug_send(log_buf, 45);
 
             sprintf((char *)log_buf, "\r\nTask 5 Hz actual frequency: %d Hz", task_freq[IDX_TASK_5_HZ]);
