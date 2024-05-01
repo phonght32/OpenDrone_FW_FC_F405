@@ -39,11 +39,11 @@
 #define FREQ_HZ_TO_TIME_US(x)       (1000000.0f/(x))
 #define TIME_US_TO_FREQ_HZ(x)       (1000000.0f/(x))
 
-#define IDX_TASK_1000_HZ            0
+#define IDX_TASK_500_HZ             0
 #define IDX_TASK_5_HZ               1
 #define NUM_OF_TASK                 2
 
-#define FREQ_1000_HZ_TIME_US        FREQ_HZ_TO_TIME_US(1000)
+#define FREQ_500_HZ_TIME_US         FREQ_HZ_TO_TIME_US(500)
 #define FREQ_5_HZ_TIME_US           FREQ_HZ_TO_TIME_US(5)
 /* USER CODE END PTD */
 /* Private define ------------------------------------------------------------*/
@@ -122,7 +122,7 @@ int main(void)
         uint32_t current_time = hw_intf_get_time_us();
 
         /* Task 1000 Hz */
-        if ((current_time - last_time_us[IDX_TASK_1000_HZ]) > FREQ_1000_HZ_TIME_US)
+        if ((current_time - last_time_us[IDX_TASK_500_HZ]) > FREQ_500_HZ_TIME_US)
         {
             periph_radio_clear_transmit_irq_flags();
             periph_radio_receive((uint8_t *)&OpenDrone_TxProto_Msg_OprCtrl);
@@ -132,10 +132,10 @@ int main(void)
             periph_imu_update_filter();
 
 #ifdef USE_SERIAL_DEBUG
-            task_freq[IDX_TASK_1000_HZ] = TIME_US_TO_FREQ_HZ(current_time - last_time_us[IDX_TASK_1000_HZ]);
+            task_freq[IDX_TASK_500_HZ] = TIME_US_TO_FREQ_HZ(current_time - last_time_us[IDX_TASK_500_HZ]);
 #endif
 
-            last_time_us[IDX_TASK_1000_HZ] = current_time;
+            last_time_us[IDX_TASK_500_HZ] = current_time;
         }
 
         /* Task 5 Hz */
@@ -150,7 +150,7 @@ int main(void)
             sprintf((char *)log_buf, "\r\nroll: %7.4f\t\tpitch: %7.4f\t\tyaw: %7.4f\t", debug_roll, debug_pitch, debug_yaw);
             hw_intf_uart_debug_send(log_buf, 50);
 
-            sprintf((char *)log_buf, "\r\nTask 1000 Hz actual frequency: %d Hz", task_freq[IDX_TASK_1000_HZ]);
+            sprintf((char *)log_buf, "\r\nTask 1000 Hz actual frequency: %d Hz", task_freq[IDX_TASK_500_HZ]);
             hw_intf_uart_debug_send(log_buf, 45);
 
             sprintf((char *)log_buf, "\r\nTask 5 Hz actual frequency: %d Hz", task_freq[IDX_TASK_5_HZ]);
