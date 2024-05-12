@@ -31,7 +31,6 @@ extern "C" {
 
 err_code_t periph_radio_init(void);
 err_code_t periph_radio_receive(uint8_t *data);
-err_code_t periph_radio_clear_transmit_irq_flags(void);
 
 #ifdef __cplusplus
 }

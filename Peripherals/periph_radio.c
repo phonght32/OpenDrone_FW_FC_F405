@@ -65,36 +65,18 @@ err_code_t periph_radio_init(void)
 err_code_t periph_radio_receive(uint8_t *data)
 {
 #ifdef USE_NRF24L01
-	nrf24l01_transmit(nrf24l01_handle, data);
-#endif
-
-#ifdef USE_SX1278
-	sx1278_lora_transmit(sx1278_handle, data);
-#endif
-
-	return ERR_CODE_SUCCESS;
-}
-
-err_code_t periph_radio_clear_transmit_irq_flags(void)
-{
-#ifdef USE_NRF24L01
 	uint8_t irq_level;
 	hw_intf_nrf24l01_get_irq(&irq_level);
 
 	if (irq_level == NRF24L01_IRQ_ACTIVE_LEVEL)
 	{
-		nrf24l01_clear_receive_irq_flags(nrf24l01_handle);
+		nrf24l01_receive(nrf24l01_handle, data);
+		nrf24l01_clear_rx_dr(nrf24l01_handle);
 	}
 #endif
 
 #ifdef USE_SX1278
-	uint8_t irq_level;
-	hw_intf_sx1278_get_irq(&irq_level);
-
-	if (irq_level == SX1278_IRQ_ACTIVE_LEVEL)
-	{
-		sx1278_lora_clear_irq_flags(sx1278_handle);
-	}
+	sx1278_lora_receive(sx1278_handle, data);
 #endif
 
 	return ERR_CODE_SUCCESS;
