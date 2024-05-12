@@ -40,16 +40,19 @@
 #define TIME_US_TO_FREQ_HZ(x)       (1000000.0f/(x))
 
 #define IDX_TASK_500_HZ             0
-#define IDX_TASK_50_HZ              1
-#define IDX_TASK_5_HZ               2
-#define NUM_OF_TASK                 3
+#define IDX_TASK_100_HZ             1
+#define IDX_TASK_50_HZ              2
+#define IDX_TASK_5_HZ               3
+#define NUM_OF_TASK                 4
 
 #define FREQ_500_HZ_TIME_US         FREQ_HZ_TO_TIME_US(500)
+#define FREQ_100_HZ_TIME_US         FREQ_HZ_TO_TIME_US(100)
 #define FREQ_50_HZ_TIME_US          FREQ_HZ_TO_TIME_US(50)
 #define FREQ_5_HZ_TIME_US           FREQ_HZ_TO_TIME_US(5)
 /* USER CODE END PTD */
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+// #define PRINT_ANGLE
 /* USER CODE END PD */
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
@@ -62,7 +65,7 @@ uint16_t task_freq[NUM_OF_TASK];
 #endif
 
 uint32_t last_time_us[NUM_OF_TASK] = {0};
-OpenDrone_TxProto_Msg_OprCtrl_t OpenDrone_TxProto_Msg_OprCtrl = {0};
+OpenDrone_TxProto_Msg_t OpenDrone_TxProto_Msg = {0};
 /* USER CODE END PV */
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
@@ -126,8 +129,6 @@ int main(void)
         /* Task 500 Hz */
         if ((current_time - last_time_us[IDX_TASK_500_HZ]) > FREQ_500_HZ_TIME_US)
         {
-            periph_radio_clear_transmit_irq_flags();
-
             periph_imu_update_accel();
             periph_imu_update_gyro();
             periph_imu_update_filter();
@@ -139,11 +140,17 @@ int main(void)
             last_time_us[IDX_TASK_500_HZ] = current_time;
         }
 
+        /* Task 100 Hz */
+        if ((current_time - last_time_us[IDX_TASK_100_HZ]) > FREQ_100_HZ_TIME_US)
+        {
+            last_time_us[IDX_TASK_100_HZ] = current_time;
+        }
+
         /* Task 50 Hz */
         if ((current_time - last_time_us[IDX_TASK_50_HZ]) > FREQ_50_HZ_TIME_US)
         {
-            periph_radio_receive((uint8_t *)&OpenDrone_TxProto_Msg_OprCtrl);
-            
+            periph_radio_receive((uint8_t *)&OpenDrone_TxProto_Msg);
+
 #ifdef USE_SERIAL_DEBUG
             task_freq[IDX_TASK_50_HZ] = TIME_US_TO_FREQ_HZ(current_time - last_time_us[IDX_TASK_50_HZ]);
 #endif
@@ -155,6 +162,8 @@ int main(void)
         if ((current_time - last_time_us[IDX_TASK_5_HZ]) > FREQ_5_HZ_TIME_US)
         {
 #ifdef USE_SERIAL_DEBUG
+
+#ifdef PRINT_ANGLE
             float debug_roll, debug_pitch, debug_yaw;
             periph_imu_get_angel(&debug_roll, &debug_pitch, &debug_yaw);
 
@@ -170,7 +179,17 @@ int main(void)
             hw_intf_uart_debug_send(log_buf, 45);
 
             sprintf((char *)log_buf, "\r\nTask 5 Hz actual frequency: %d Hz", task_freq[IDX_TASK_5_HZ]);
+
             hw_intf_uart_debug_send(log_buf, 45);
+#endif
+
+            sprintf((char *)log_buf, "\r\nthrottle: %03d \troll: %03d \tpitch: %03d \tyaw: %03d",
+                    OpenDrone_TxProto_Msg.Payload.StabilizerCtrl.throttle,
+                    OpenDrone_TxProto_Msg.Payload.StabilizerCtrl.roll,
+                    OpenDrone_TxProto_Msg.Payload.StabilizerCtrl.pitch,
+                    OpenDrone_TxProto_Msg.Payload.StabilizerCtrl.yaw);
+
+            hw_intf_uart_debug_send(log_buf, 50);
 #endif
             last_time_us[IDX_TASK_5_HZ] = current_time;
         }
