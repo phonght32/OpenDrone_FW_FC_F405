@@ -32,6 +32,7 @@
 #include "periph_radio.h"
 #include "periph_imu.h"
 #include "periph_esc.h"
+#include "periph_controller.h"
 #include "OpenDrone_TxProto.h"
 /* USER CODE END Includes */
 /* Private typedef -----------------------------------------------------------*/
@@ -118,6 +119,12 @@ int main(void)
 #ifdef USE_SERIAL_DEBUG
     sprintf((char *)log_buf, "\r\nInit peripheral ESC complete");
     hw_intf_uart_debug_send(log_buf, 30);
+#endif
+
+    periph_controller_init();
+#ifdef USE_SERIAL_DEBUG
+    sprintf((char *)log_buf, "\r\nInit peripheral CONTROLLER complete");
+    hw_intf_uart_debug_send(log_buf, 37);
 #endif
     /* USER CODE END 2 */
     /* Infinite loop */
