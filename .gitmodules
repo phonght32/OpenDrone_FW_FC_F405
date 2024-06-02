@@ -32,3 +32,6 @@
 [submodule "Components/imu_madgwick"]
 	path = Components/imu_madgwick
 	url = git@github.com:phonght32/imu_madgwick.git
+[submodule "Components/pid_controller"]
+	path = Components/pid_controller
+	url = git@github.com:phonght32/pid_controller.git
