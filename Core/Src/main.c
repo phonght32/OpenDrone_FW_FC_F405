@@ -28,12 +28,8 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "stdio.h"
-#include "hw_intf.h"
-#include "periph_radio.h"
-#include "periph_imu.h"
-#include "periph_esc.h"
-#include "periph_controller.h"
-#include "OpenDrone_TxProto.h"
+#include "OpenDrone_FC_HwIntf.h"
+#include "OpenDrone_FC.h"
 /* USER CODE END Includes */
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
@@ -103,25 +99,25 @@ int main(void)
     MX_USART1_UART_Init();
     MX_I2C2_Init();
     /* USER CODE BEGIN 2 */
-    periph_imu_init();
+    PeriphIMU_Init();
 #ifdef USE_SERIAL_DEBUG
     sprintf((char *)log_buf, "\r\nInit peripheral IMU complete");
     hw_intf_uart_debug_send(log_buf, 30);
 #endif
 
-    periph_radio_init();
+    PeriphRadio_Init();
 #ifdef USE_SERIAL_DEBUG
     sprintf((char *)log_buf, "\r\nInit peripheral RADIO complete");
     hw_intf_uart_debug_send(log_buf, 32);
 #endif
 
-    periph_esc_init();
+    PeriphEsc_Init();
 #ifdef USE_SERIAL_DEBUG
     sprintf((char *)log_buf, "\r\nInit peripheral ESC complete");
     hw_intf_uart_debug_send(log_buf, 30);
 #endif
 
-    periph_controller_init();
+    PeriphController_Init();
 #ifdef USE_SERIAL_DEBUG
     sprintf((char *)log_buf, "\r\nInit peripheral CONTROLLER complete");
     hw_intf_uart_debug_send(log_buf, 37);
@@ -136,9 +132,9 @@ int main(void)
         /* Task 500 Hz */
         if ((current_time - last_time_us[IDX_TASK_500_HZ]) > FREQ_500_HZ_TIME_US)
         {
-            periph_imu_update_accel();
-            periph_imu_update_gyro();
-            periph_imu_update_filter();
+        	PeriphIMU_UpdateAccel();
+        	PeriphIMU_UpdateGyro();
+        	PeriphIMU_UpdateFilter();
 
 #ifdef USE_SERIAL_DEBUG
             task_freq[IDX_TASK_500_HZ] = TIME_US_TO_FREQ_HZ(current_time - last_time_us[IDX_TASK_500_HZ]);
@@ -156,7 +152,7 @@ int main(void)
         /* Task 50 Hz */
         if ((current_time - last_time_us[IDX_TASK_50_HZ]) > FREQ_50_HZ_TIME_US)
         {
-            periph_radio_receive((uint8_t *)&OpenDrone_TxProto_Msg);
+        	PeriphRadio_Receive((uint8_t *)&OpenDrone_TxProto_Msg);
 
 #ifdef USE_SERIAL_DEBUG
             task_freq[IDX_TASK_50_HZ] = TIME_US_TO_FREQ_HZ(current_time - last_time_us[IDX_TASK_50_HZ]);

@@ -3,7 +3,7 @@
 #include "i2c.h"
 #include "usart.h"
 
-#include "hw_intf.h"
+#include "OpenDrone_FC_HwIntf.h"
 #include "mpu6050.h"
 #include "hmc5883l.h"
 #include "esc_dshot.h"
