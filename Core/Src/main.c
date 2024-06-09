@@ -27,8 +27,6 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "stdio.h"
-#include "OpenDrone_FC_HwIntf.h"
 #include "OpenDrone_FC.h"
 /* USER CODE END Includes */
 /* Private typedef -----------------------------------------------------------*/
