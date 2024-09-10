@@ -90,10 +90,10 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="hw_intf"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="OpenDrone_FC_FW"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Core"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Drivers"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="OpenDrone_FC_FW"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="hw_intf"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
