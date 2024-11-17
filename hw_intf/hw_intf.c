@@ -36,7 +36,7 @@
 
 #ifdef USE_MPU6050
 #define I2C_ADDR_MPU6050   				(MPU6050_I2C_ADDR<<1)
-#define MPU6050_I2C  					hi2c1
+#define MPU6050_I2C  					hi2c2
 #endif
 
 #ifdef USE_HMC5883L
