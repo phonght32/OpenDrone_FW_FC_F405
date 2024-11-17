@@ -40,7 +40,7 @@
 #endif
 
 #ifdef USE_HMC5883L
-#define HMC5883L_I2C  					hi2c1
+#define HMC5883L_I2C  					hi2c2
 #endif
 
 #ifdef USE_ESC_DSHOT
