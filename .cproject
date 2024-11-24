@@ -62,6 +62,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FC_F405_FW/OpenDrone_FC_FW/Sensor/bmp180}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FC_F405_FW/OpenDrone_FC_FW/Sensor/bmp280}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FC_F405_FW/OpenDrone_FC_FW/Sensor/hmc5883l}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FC_F405_FW/OpenDrone_FC_FW/Sensor/qmc5883l}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FC_F405_FW/OpenDrone_FC_FW/Sensor/mpu6050}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FC_F405_FW/OpenDrone_FC_FW/TxProtocol/OpenDrone_TxProtocol}&quot;"/>
 								</option>
