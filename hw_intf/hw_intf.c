@@ -45,6 +45,7 @@
 #endif
 
 #ifdef USE_QMC5883L
+#define I2C_ADDR_QMC5883L				(QMC5883L_I2C_ADDR<<1)
 #define QMC5883L_I2C  					hi2c2
 #endif
 
