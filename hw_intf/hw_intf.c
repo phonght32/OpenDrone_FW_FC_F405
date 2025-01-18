@@ -232,7 +232,7 @@ err_code_t hw_intf_qmc5883l_i2c_send(uint8_t reg_addr, uint8_t *buf, uint16_t le
 		buf_send[i + 1] = buf[i];
 	}
 
-	HAL_I2C_Master_Transmit(&QMC5883L_I2C, QMC5883L_I2C_ADDR, buf_send, len + 1, 100);
+	HAL_I2C_Master_Transmit(&QMC5883L_I2C, I2C_ADDR_QMC5883L, buf_send, len + 1, 100);
 
 	return ERR_CODE_SUCCESS;
 }
@@ -242,8 +242,8 @@ err_code_t hw_intf_qmc5883l_i2c_recv(uint8_t reg_addr, uint8_t *buf, uint16_t le
 	uint8_t buffer[1];
 	buffer[0] = reg_addr;
 
-	HAL_I2C_Master_Transmit(&QMC5883L_I2C, QMC5883L_I2C_ADDR, buffer, 1, 100);
-	HAL_I2C_Master_Receive(&QMC5883L_I2C, QMC5883L_I2C_ADDR, buf, len, 100);
+	HAL_I2C_Master_Transmit(&QMC5883L_I2C, I2C_ADDR_QMC5883L, buffer, 1, 100);
+	HAL_I2C_Master_Receive(&QMC5883L_I2C, I2C_ADDR_QMC5883L, buf, len, 100);
 
 	return ERR_CODE_SUCCESS;
 }
