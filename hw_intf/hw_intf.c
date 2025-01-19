@@ -40,6 +40,12 @@
 #define MPU6050_I2C  					hi2c2
 #endif
 
+#ifdef USE_ICM42688
+#define ICM42688_SPI  					hspi1
+#define ICM42688_GPIO_PORT_CS         	GPIOA
+#define ICM42688_GPIO_PIN_CS      		GPIO_PIN_4
+#endif
+
 #ifdef USE_HMC5883L
 #define HMC5883L_I2C  					hi2c2
 #endif
@@ -190,6 +196,29 @@ err_code_t hw_intf_mpu6050_i2c_recv(uint8_t reg_addr, uint8_t *buf, uint16_t len
 
 	HAL_I2C_Master_Transmit(&MPU6050_I2C, I2C_ADDR_MPU6050, buffer, 1, 100);
 	HAL_I2C_Master_Receive(&MPU6050_I2C, I2C_ADDR_MPU6050, buf, len, 100);
+
+	return ERR_CODE_SUCCESS;
+}
+#endif
+
+#ifdef USE_ICM42688
+err_code_t hw_intf_icm42688_spi_send(uint8_t *buf_send, uint16_t len)
+{
+	HAL_SPI_Transmit(&ICM42688_SPI, buf_send, len, 100);
+
+	return ERR_CODE_SUCCESS;
+}
+
+err_code_t hw_intf_icm42688_spi_recv(uint8_t *buf_recv, uint16_t len)
+{
+	HAL_SPI_Receive(&ICM42688_SPI, buf_recv, len, 100);
+
+	return ERR_CODE_SUCCESS;
+}
+
+err_code_t hw_intf_icm42688_set_cs(uint8_t level)
+{
+	HAL_GPIO_WritePin(ICM42688_GPIO_PORT_CS, ICM42688_GPIO_PIN_CS, level);
 
 	return ERR_CODE_SUCCESS;
 }
