@@ -66,7 +66,7 @@
 #define BL_ESC_DSHOT_TIM                htim5
 #define BL_ESC_DSHOT_TIM_CHNL           TIM_CHANNEL_4
 
-#define BR_ESC_DSHOT_TIM                htim2
+#define BR_ESC_DSHOT_TIM                htim5
 #define BR_ESC_DSHOT_TIM_CHNL           TIM_CHANNEL_3
 #endif
 
