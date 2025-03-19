@@ -72,7 +72,7 @@
 
 uint32_t hw_intf_get_time_us(void)
 {
-	return HAL_GetTick() * 1000;
+	return __HAL_TIM_GET_COUNTER(&htim2);
 }
 
 void hw_intf_delay_ms(uint32_t time_ms)
