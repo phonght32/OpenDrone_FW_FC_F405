@@ -49,23 +49,22 @@
 									<listOptionValue builtIn="false" value="../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy"/>
 									<listOptionValue builtIn="false" value="../Drivers/CMSIS/Device/ST/STM32F4xx/Include"/>
 									<listOptionValue builtIn="false" value="../Drivers/CMSIS/Include"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FC_F405_FW/Portable/mcu_port}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FC_F405_FW/OpenDrone_FC_FW}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FC_F405_FW/OpenDrone_FC_FW/Algorithm/pid_controller}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FC_F405_FW/OpenDrone_FC_FW/EscProtocol/esc_dshot}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FC_F405_FW/OpenDrone_FC_FW/Filter/imu_madgwick}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FC_F405_FW/OpenDrone_FC_FW/HwIntf}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FC_F405_FW/OpenDrone_FC_FW/OSD/max7456}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FC_F405_FW/OpenDrone_FC_FW/Peripherals}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FC_F405_FW/OpenDrone_FC_FW/Radio/nrf24l01}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FC_F405_FW/OpenDrone_FC_FW/Radio/sx1278}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FC_F405_FW/OpenDrone_FC_FW/Sensor/bmp180}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FC_F405_FW/OpenDrone_FC_FW/Sensor/bmp280}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FC_F405_FW/OpenDrone_FC_FW/Sensor/hmc5883l}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FC_F405_FW/OpenDrone_FC_FW/Sensor/qmc5883l}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FC_F405_FW/OpenDrone_FC_FW/Sensor/mpu6050}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FC_F405_FW/OpenDrone_FC_FW/Sensor/icm42688}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FC_F405_FW/OpenDrone_FC_FW/TxProtocol/OpenDrone_TxProtocol}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FW_FC_F405/Portable/mcu_port}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FW_FC_F405/OpenDrone_FW_FC}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FW_FC_F405/OpenDrone_FW_FC/HwIntf}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FW_FC_F405/OpenDrone_FW_FC/Algorithm/pid_controller}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FW_FC_F405/OpenDrone_FW_FC/EscProtocol/esc_dshot}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FW_FC_F405/OpenDrone_FW_FC/Filter/imu_madgwick}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FW_FC_F405/OpenDrone_FW_FC/OSD/max7456}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FW_FC_F405/OpenDrone_FW_FC/Radio/nrf24l01}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FW_FC_F405/OpenDrone_FW_FC/Radio/sx1278}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FW_FC_F405/OpenDrone_FW_FC/Sensor/bmp180}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FW_FC_F405/OpenDrone_FW_FC/Sensor/bmp280}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FW_FC_F405/OpenDrone_FW_FC/Sensor/hmc5883l}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FW_FC_F405/OpenDrone_FW_FC/Sensor/qmc5883l}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FW_FC_F405/OpenDrone_FW_FC/Sensor/mpu6050}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FW_FC_F405/OpenDrone_FW_FC/Sensor/icm42688}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FW_FC_F405/OpenDrone_FW_FC/TxProtocol/OpenDrone_TxProtocol}&quot;"/>
 								</option>
 								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c.1444316460" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c"/>
 							</tool>
@@ -92,10 +91,10 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="hw_intf"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="OpenDrone_FC_FW"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Core"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Drivers"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="OpenDrone_FW_FC"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="hw_intf"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
