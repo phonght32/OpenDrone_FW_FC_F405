@@ -8,6 +8,7 @@
 #include "mpu6050.h"
 #include "hmc5883l.h"
 #include "qmc5883l.h"
+#include "bmp280.h"
 #include "esc_dshot.h"
 
 #define APP_TIM 						htim3
@@ -54,6 +55,11 @@
 #ifdef USE_QMC5883L
 #define I2C_ADDR_QMC5883L				(QMC5883L_I2C_ADDR<<1)
 #define QMC5883L_I2C  					hi2c2
+#endif
+
+#ifdef USE_BMP280
+#define BMP280_I2C                          hi2c2
+#define I2C_ADDR_BMP280                     (BMP280_I2C_ADDR_0<<1)
 #endif
 
 #ifdef USE_ESC_DSHOT
@@ -264,6 +270,33 @@ err_code_t hw_intf_qmc5883l_i2c_recv(uint8_t reg_addr, uint8_t *buf, uint16_t le
 	HAL_I2C_Master_Receive(&QMC5883L_I2C, I2C_ADDR_QMC5883L, buf, len, 100);
 
 	return ERR_CODE_SUCCESS;
+}
+#endif
+
+#ifdef USE_BMP280
+err_code_t hw_intf_bmp280_i2c_send(uint8_t reg_addr, uint8_t *buf, uint16_t len)
+{
+    uint8_t buf_send[len + 1];
+    buf_send[0] = reg_addr;
+    for (uint8_t i = 0; i < len; i++)
+    {
+        buf_send[i + 1] = buf[i];
+    }
+
+    HAL_I2C_Master_Transmit(&BMP280_I2C, I2C_ADDR_BMP280, buf_send, len + 1, 100);
+
+    return ERR_CODE_SUCCESS;
+}
+
+err_code_t hw_intf_bmp280_i2c_recv(uint8_t reg_addr, uint8_t *buf, uint16_t len)
+{
+    uint8_t buffer[1];
+    buffer[0] = reg_addr;
+
+    HAL_I2C_Master_Transmit(&BMP280_I2C, I2C_ADDR_BMP280, buffer, 1, 100);
+    HAL_I2C_Master_Receive(&BMP280_I2C, I2C_ADDR_BMP280, buf, len, 100);
+
+    return ERR_CODE_SUCCESS;
 }
 #endif
 
