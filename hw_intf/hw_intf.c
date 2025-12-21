@@ -66,14 +66,14 @@
 #define FL_ESC_DSHOT_TIM                htim3
 #define FL_ESC_DSHOT_TIM_CHNL           TIM_CHANNEL_3
 
-#define FR_ESC_DSHOT_TIM                htim3
-#define FR_ESC_DSHOT_TIM_CHNL           TIM_CHANNEL_4
+#define FR_ESC_DSHOT_TIM                htim5
+#define FR_ESC_DSHOT_TIM_CHNL           TIM_CHANNEL_3
 
 #define BL_ESC_DSHOT_TIM                htim5
 #define BL_ESC_DSHOT_TIM_CHNL           TIM_CHANNEL_4
 
-#define BR_ESC_DSHOT_TIM                htim5
-#define BR_ESC_DSHOT_TIM_CHNL           TIM_CHANNEL_3
+#define BR_ESC_DSHOT_TIM                htim3
+#define BR_ESC_DSHOT_TIM_CHNL           TIM_CHANNEL_4
 #endif
 
 uint32_t hw_intf_get_time_us(void)
