@@ -52,6 +52,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FW_FC_F405/Portable/mcu_port}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FW_FC_F405/OpenDrone_FW_FC}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FW_FC_F405/OpenDrone_FW_FC/HwIntf}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FW_FC_F405/OpenDrone_FW_FC/IMU}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FW_FC_F405/OpenDrone_FW_FC/Algorithm/pid_controller}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FW_FC_F405/OpenDrone_FW_FC/EscProtocol/esc_dshot}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FW_FC_F405/OpenDrone_FW_FC/Filter/imu_madgwick}&quot;"/>
