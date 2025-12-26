@@ -134,6 +134,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FW_FC_F405/OpenDrone_FW_FC/Radio}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FW_FC_F405/OpenDrone_FW_FC/Radio/Sensor/nrf24l01}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FW_FC_F405/OpenDrone_FW_FC/Radio/Sensor/sx1278}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FW_FC_F405/OpenDrone_FW_FC/Controller}&quot;"/>
 								</option>
 								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c.925728954" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c"/>
 							</tool>
