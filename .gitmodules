@@ -1,6 +1,3 @@
-[submodule "Portable/mcu_port"]
-	path = Portable/mcu_port
-	url = git@github.com:phonght32/mcu_port.git
 [submodule "OpenDrone_FW_FC"]
 	path = OpenDrone_FW_FC
 	url = git@github.com:phonght32/OpenDrone_FW_FC.git
