@@ -49,7 +49,6 @@
 									<listOptionValue builtIn="false" value="../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy"/>
 									<listOptionValue builtIn="false" value="../Drivers/CMSIS/Device/ST/STM32F4xx/Include"/>
 									<listOptionValue builtIn="false" value="../Drivers/CMSIS/Include"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FW_FC_F405/Portable/mcu_port}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FW_FC_F405/OpenDrone_FW_FC}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FW_FC_F405/OpenDrone_FW_FC/HwIntf}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FW_FC_F405/OpenDrone_FW_FC/Algorithm/pid_controller}&quot;"/>
@@ -68,6 +67,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FW_FC_F405/OpenDrone_FW_FC/Radio/TxProtocol/OpenDrone_TxProtocol}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FW_FC_F405/OpenDrone_FW_FC/ESC}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FW_FC_F405/OpenDrone_FW_FC/ESC/Protocol/esc_dshot}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FW_FC_F405/OpenDrone_FW_FC/Config}&quot;"/>
 								</option>
 								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c.1444316460" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c"/>
 							</tool>
@@ -115,7 +115,6 @@
 									<listOptionValue builtIn="false" value="../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy"/>
 									<listOptionValue builtIn="false" value="../Drivers/CMSIS/Device/ST/STM32F4xx/Include"/>
 									<listOptionValue builtIn="false" value="../Drivers/CMSIS/Include"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FW_FC_F405/Portable/mcu_port}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FW_FC_F405/OpenDrone_FW_FC}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FW_FC_F405/OpenDrone_FW_FC/HwIntf}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FW_FC_F405/OpenDrone_FW_FC/IMU}&quot;"/>
@@ -135,6 +134,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FW_FC_F405/OpenDrone_FW_FC/Radio/Sensor/nrf24l01}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FW_FC_F405/OpenDrone_FW_FC/Radio/Sensor/sx1278}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FW_FC_F405/OpenDrone_FW_FC/Controller}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FW_FC_F405/OpenDrone_FW_FC/Config}&quot;"/>
 								</option>
 								<inputType id="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c.925728954" superClass="com.st.stm32cube.ide.mcu.gnu.managedbuild.tool.c.compiler.input.c"/>
 							</tool>
