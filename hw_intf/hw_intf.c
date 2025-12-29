@@ -9,7 +9,9 @@
 #include "hmc5883l.h"
 #include "qmc5883l.h"
 #include "bmp280.h"
+#include "icm42688.h"
 #include "esc_dshot.h"
+#include "nrf24l01.h"
 
 #define APP_TIM 						htim3
 
@@ -96,35 +98,35 @@ err_code_t hw_intf_uart_debug_send(uint8_t *log_buf, uint16_t len)
 #endif
 
 #ifdef USE_NRF24L01
-err_code_t hw_intf_nrf24l01_spi_send(uint8_t *buf_send, uint16_t len)
+nrf24l01_status_t hw_intf_nrf24l01_spi_send(uint8_t *buf_send, uint16_t len)
 {
 	HAL_SPI_Transmit(&NRF24L01_SPI, buf_send, len, 100);
 
 	return ERR_CODE_SUCCESS;
 }
 
-err_code_t hw_intf_nrf24l01_spi_recv(uint8_t *buf_recv, uint16_t len)
+nrf24l01_status_t hw_intf_nrf24l01_spi_recv(uint8_t *buf_recv, uint16_t len)
 {
 	HAL_SPI_Receive(&NRF24L01_SPI, buf_recv, len, 100);
 
 	return ERR_CODE_SUCCESS;
 }
 
-err_code_t hw_intf_nrf24l01_set_cs(uint8_t level)
+nrf24l01_status_t hw_intf_nrf24l01_set_cs(uint8_t level)
 {
 	HAL_GPIO_WritePin(NRF24L01_GPIO_PORT_CS, NRF24L01_GPIO_PIN_CS, level);
 
 	return ERR_CODE_SUCCESS;
 }
 
-err_code_t hw_intf_nrf24l01_set_ce(uint8_t level)
+nrf24l01_status_t hw_intf_nrf24l01_set_ce(uint8_t level)
 {
 	HAL_GPIO_WritePin(NRF24L01_GPIO_PORT_CE, NRF24L01_GPIO_PIN_CE, level);
 
 	return ERR_CODE_SUCCESS;
 }
 
-err_code_t hw_intf_nrf24l01_get_irq(uint8_t *level)
+nrf24l01_status_t hw_intf_nrf24l01_get_irq(uint8_t *level)
 {
 	*level = HAL_GPIO_ReadPin(NRF24L01_GPIO_PORT_IRQ, NRF24L01_GPIO_PIN_IRQ);
 
@@ -197,21 +199,21 @@ err_code_t hw_intf_mpu6050_i2c_recv(uint8_t reg_addr, uint8_t *buf, uint16_t len
 #endif
 
 #ifdef USE_ICM42688
-err_code_t hw_intf_icm42688_spi_send(uint8_t *buf_send, uint16_t len)
+icm42688_status_t hw_intf_icm42688_spi_send(uint8_t *buf_send, uint16_t len)
 {
 	HAL_SPI_Transmit(&ICM42688_SPI, buf_send, len, 100);
 
 	return ERR_CODE_SUCCESS;
 }
 
-err_code_t hw_intf_icm42688_spi_recv(uint8_t *buf_recv, uint16_t len)
+icm42688_status_t hw_intf_icm42688_spi_recv(uint8_t *buf_recv, uint16_t len)
 {
 	HAL_SPI_Receive(&ICM42688_SPI, buf_recv, len, 100);
 
 	return ERR_CODE_SUCCESS;
 }
 
-err_code_t hw_intf_icm42688_set_cs(uint8_t level)
+icm42688_status_t hw_intf_icm42688_set_cs(uint8_t level)
 {
 	HAL_GPIO_WritePin(ICM42688_GPIO_PORT_CS, ICM42688_GPIO_PIN_CS, level);
 
@@ -247,7 +249,7 @@ err_code_t hw_intf_hmc5883l_i2c_recv(uint8_t reg_addr, uint8_t *buf, uint16_t le
 #endif
 
 #ifdef USE_QMC5883L
-err_code_t hw_intf_qmc5883l_i2c_send(uint8_t reg_addr, uint8_t *buf, uint16_t len)
+qmc5883l_status_t hw_intf_qmc5883l_i2c_send(uint8_t reg_addr, uint8_t *buf, uint16_t len)
 {
 	uint8_t buf_send[len + 1];
 	buf_send[0] = reg_addr;
@@ -261,7 +263,7 @@ err_code_t hw_intf_qmc5883l_i2c_send(uint8_t reg_addr, uint8_t *buf, uint16_t le
 	return ERR_CODE_SUCCESS;
 }
 
-err_code_t hw_intf_qmc5883l_i2c_recv(uint8_t reg_addr, uint8_t *buf, uint16_t len)
+qmc5883l_status_t hw_intf_qmc5883l_i2c_recv(uint8_t reg_addr, uint8_t *buf, uint16_t len)
 {
 	uint8_t buffer[1];
 	buffer[0] = reg_addr;
@@ -274,7 +276,7 @@ err_code_t hw_intf_qmc5883l_i2c_recv(uint8_t reg_addr, uint8_t *buf, uint16_t le
 #endif
 
 #ifdef USE_BMP280
-err_code_t hw_intf_bmp280_i2c_send(uint8_t reg_addr, uint8_t *buf, uint16_t len)
+bmp280_status_t hw_intf_bmp280_i2c_send(uint8_t reg_addr, uint8_t *buf, uint16_t len)
 {
     uint8_t buf_send[len + 1];
     buf_send[0] = reg_addr;
@@ -288,7 +290,7 @@ err_code_t hw_intf_bmp280_i2c_send(uint8_t reg_addr, uint8_t *buf, uint16_t len)
     return ERR_CODE_SUCCESS;
 }
 
-err_code_t hw_intf_bmp280_i2c_recv(uint8_t reg_addr, uint8_t *buf, uint16_t len)
+bmp280_status_t hw_intf_bmp280_i2c_recv(uint8_t reg_addr, uint8_t *buf, uint16_t len)
 {
     uint8_t buffer[1];
     buffer[0] = reg_addr;
@@ -301,25 +303,25 @@ err_code_t hw_intf_bmp280_i2c_recv(uint8_t reg_addr, uint8_t *buf, uint16_t len)
 #endif
 
 #ifdef USE_ESC_DSHOT
-err_code_t hw_intf_fl_esc_dshot_send_dma(uint32_t *packet_dma)
+esc_dshot_status_t hw_intf_fl_esc_dshot_send_dma(uint32_t *packet_dma)
 {
 	HAL_TIM_PWM_Start_DMA(&FL_ESC_DSHOT_TIM, FL_ESC_DSHOT_TIM_CHNL, packet_dma, DSHOT_DMA_BUFFER);
 	return ERR_CODE_SUCCESS;
 }
 
-err_code_t hw_intf_fr_esc_dshot_send_dma(uint32_t *packet_dma)
+esc_dshot_status_t hw_intf_fr_esc_dshot_send_dma(uint32_t *packet_dma)
 {
 	HAL_TIM_PWM_Start_DMA(&FR_ESC_DSHOT_TIM, FR_ESC_DSHOT_TIM_CHNL, packet_dma, DSHOT_DMA_BUFFER);
 	return ERR_CODE_SUCCESS;
 }
 
-err_code_t hw_intf_bl_esc_dshot_send_dma(uint32_t *packet_dma)
+esc_dshot_status_t hw_intf_bl_esc_dshot_send_dma(uint32_t *packet_dma)
 {
 	HAL_TIM_PWM_Start_DMA(&BL_ESC_DSHOT_TIM, BL_ESC_DSHOT_TIM_CHNL, packet_dma, DSHOT_DMA_BUFFER);
 	return ERR_CODE_SUCCESS;
 }
 
-err_code_t hw_intf_br_esc_dshot_send_dma(uint32_t *packet_dma)
+esc_dshot_status_t hw_intf_br_esc_dshot_send_dma(uint32_t *packet_dma)
 {
 	HAL_TIM_PWM_Start_DMA(&BR_ESC_DSHOT_TIM, BR_ESC_DSHOT_TIM_CHNL, packet_dma, DSHOT_DMA_BUFFER);
 	return ERR_CODE_SUCCESS;
