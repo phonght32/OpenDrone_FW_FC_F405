@@ -4,7 +4,7 @@
 #include "usart.h"
 
 #include "OpenDrone_FC_HwIntf.h"
-#include "OpenDrone_FC_Define.h"
+#include "OpenDrone_FC_Config.h"
 #include "mpu6050.h"
 #include "hmc5883l.h"
 #include "qmc5883l.h"
@@ -60,8 +60,8 @@
 #endif
 
 #ifdef USE_BMP280
-#define BMP280_I2C                          hi2c2
-#define I2C_ADDR_BMP280                     (BMP280_I2C_ADDR_0<<1)
+#define BMP280_I2C                      hi2c2
+#define I2C_ADDR_BMP280                 (BMP280_I2C_ADDR_0<<1)
 #endif
 
 #ifdef USE_ESC_DSHOT
