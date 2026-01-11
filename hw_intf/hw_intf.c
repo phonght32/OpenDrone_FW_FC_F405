@@ -78,6 +78,9 @@
 #define BR_ESC_DSHOT_TIM_CHNL           TIM_CHANNEL_4
 #endif
 
+#define LED1_GPIO_PORT                	GPIOB
+#define LED1_GPIO_PIN                 	GPIO_PIN_4
+
 uint32_t hw_intf_get_time_us(void)
 {
 	return __HAL_TIM_GET_COUNTER(&htim2);
@@ -325,3 +328,8 @@ esc_dshot_status_t hw_intf_br_esc_dshot_send_dma(uint32_t *packet_dma)
 	return ESC_DSHOT_STATUS_SUCCESS;
 }
 #endif
+
+void hw_intf_led1_set(uint8_t level)
+{
+	HAL_GPIO_WritePin(LED1_GPIO_PORT, LED1_GPIO_PIN, level);
+}
