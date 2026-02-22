@@ -50,7 +50,6 @@
 									<listOptionValue builtIn="false" value="../Drivers/CMSIS/Device/ST/STM32F4xx/Include"/>
 									<listOptionValue builtIn="false" value="../Drivers/CMSIS/Include"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FW_FC_F405/OpenDrone_FW_FC}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FW_FC_F405/OpenDrone_FW_FC/HwIntf}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FW_FC_F405/OpenDrone_FW_FC/Algorithm/pid_controller}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FW_FC_F405/OpenDrone_FW_FC/Algorithm/clinalg}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/OpenDrone_FW_FC_F405/OpenDrone_FW_FC/IMU}&quot;"/>
